@@ -1,0 +1,48 @@
+images:
+    # Path to the input images
+    path: "example_images"
+
+    # Image types to include
+    types:
+    - png
+
+database:
+    # Path to store tags database
+    path: "example_output/image_tags.db"
+
+
+tagging:
+    # Define the tagging question
+    tag question: "Which color does the flower have:"
+
+    # Define tags and shortcut key to tag
+    # Note format is "tag": "key"
+    tags:
+        White: 1
+        Red: 2
+        Yellow: 3
+        Blue: 4
+        Other: 5
+
+    # Allow selection of multiple labels
+    multi-select: False
+
+    # Join string for multiple labels
+    multi-separator: " + "
+
+    # Show remarks field
+    allow remarks: True
+
+interface:
+    # Max image size in pixels
+    max_width: 400
+    max_height: 600
+
+server:
+
+    # Host and port for the Flask server
+    host: "127.0.0.1"
+    port: "8080"
+
+    # Turns Flask debug mode on or off
+    debug mode: True

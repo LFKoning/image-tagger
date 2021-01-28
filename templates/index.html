@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Image Tagger</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet"  type="text/css" href="/static/styles.css" />
+        <style type="text/css">
+            div#image {
+                float: left;
+                width: {{ meta['max_image_width'] }}px;
+                height: {{ meta['max_image_height'] }}px;
+            }
+
+            img#tag_image {
+                max-width: {{ meta['max_image_width'] }}px;
+                max-height: {{ meta['max_image_height'] }}px;
+                height: auto;
+                width: auto;
+                border: 1px solid black;
+            }
+        </style>
+        <script type="text/javascript" src="/static/shortcuts.js"></script>
+    </head>
+    <body>
+        <div id="container">
+            <div id="header">
+                <h3 class="text">TAG IMAGES</h3>
+                <a href="/image_tags.csv"><h3>DOWNLOAD</h3></a>
+            </div>
+            <div id="content">
+                {{ content | safe }}
+            </div>
+        </div>
+    </body>
+</html>

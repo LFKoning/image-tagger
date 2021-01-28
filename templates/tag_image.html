@@ -1,0 +1,94 @@
+<div id="featured-content">
+
+  <div id="image">
+    <img id="tag_image" src="/show_image?image_id={{ id }}" />
+  </div>
+
+  <div id="inputs">
+
+    <form method="POST" action="/store_tags" id="tag_form">
+
+      <input type="hidden" name="id" value="{{ id }}" />
+
+      <h3>{{ tag_question }}</h3>
+
+      {% if multi_select %}
+
+        {% for tag, key in shortcuts.items() %}
+        <p>
+          <input type="checkbox" name="tags" id="{{ tag }}" value="{{ tag }}"
+            class="radio" {%if tag in tags %}checked{% endif %} />
+          <label for="{{ tag }}">[{{ key }}] {{ tag }}</label>
+        </p>
+        {% endfor %}
+
+      {% else %}
+
+        {% for tag, key in shortcuts.items() %}
+        <p>
+          <input type="radio" name="tags" id="{{ tag }}" value="{{ tag }}"
+            class="radio" {%if tag in tags %}checked{% endif %} />
+          <label for="{{ tag }}">[{{ key }}] {{ tag }}</label>
+        </p>
+        {% endfor %}
+
+      {% endif %}
+
+      {% if allow_remarks %}
+        <p>&nbsp;</p>
+        <h3>Remarks:</h3>
+        <textarea id="remark" name="remark" rows="4" cols="50">{{ remark }}</textarea>
+      {% else %}
+        <input type="hidden" id="remark" name="remark" value="{{ remark }}" />
+      {% endif %}
+
+      <p>&nbsp;</p>
+
+      <input type="submit" id="submit_button" value="SUBMIT [enter]">
+
+      <br clear="both" />
+
+      <input type="button" id="prev_img" class="button float_left" value="[<=] PREVIOUS"
+        {% if prev_image_id %}
+          onclick="javascript:window.location='/?image_id={{ prev_image_id }}';"
+        {% else %}
+          disabled
+        {% endif %}
+      />
+
+      <input type="button" id="next_img" class="button float_right" value="NEXT [=>]"
+        {% if next_image_id %}
+          onclick="javascript:window.location='/?image_id={{ next_image_id }}'"
+        {% else %}
+          disabled
+        {% endif %}
+      />
+
+      <br clear="both" />
+
+    </form>
+
+    <p>&nbsp;</p>
+
+    <div id="info">
+      <table>
+        <tr><td>ID:</td><td>{{ id }}</td></tr>
+        <tr><td>Path:</td><td>{{ path }}</td></tr>
+        <tr><td>Tags:</td><td>{{ tags | join(", ") }}</td></tr>
+        <tr><td>Remark:</td><td>{{ remark }}</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <br clear="both" />
+
+</div>
+
+<!-- Set label keyboard schortcuts -->
+<script language="javascript">
+  shortcuts = {
+      {% for tag, key in shortcuts.items() %}
+          '{{ key }}': '{{ tag }}',
+      {% endfor %}
+  }
+</script>

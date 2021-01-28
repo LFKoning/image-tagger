@@ -50,7 +50,13 @@ example defines the following shortcuts:
 | 4 | Select "Blue" tag |
 | 5 | Select "Other" tag |
 
-### Finished Tagging
+### Download data
+
+To download the tagging data in CSV format, simply click on the `DOWNLOAD` link at the
+top-right of the screen. This should open a download dialogue box, allowing you to save
+the tagging data.
+
+### Finished tagging
 
 Once you finish tagging images, simply close the browser window; all your progress has
 been stored into the SQLite tags database (located at: 'example_output/image_tags.db).

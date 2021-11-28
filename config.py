@@ -14,6 +14,30 @@ class ConfigReader:
     ----------
     config_path : str
         Path to the YAML configuration file.
+
+    Methods
+    -------
+    get(path, default=None, not_found="silent")
+        Gets a configuration key. Use the default argument to
+        specify a value to return if the key is not found.
+
+        Use the not_found argument to specify what happens when
+        a key is not found. Choose from:
+
+        - "silent" (do nothing, default)
+        - "warn"   (raise a warning)
+        - "error"  (raise a KeyError)
+
+    set(path, value, not_found="error")
+        Sets a configuration key to the provided value. Returns
+        a boolean indicating whether the update was succesful.
+
+        Use the not_found argument to specify what happens when
+        the key is not found. Choose from:
+
+        - "silent" (do nothing)
+        - "warn"   (raise a warning)
+        - "error"  (raise a KeyError, default)
     """
 
     def __init__(self, config_path):
@@ -27,13 +51,12 @@ class ConfigReader:
         Parameters
         ----------
         config_path : str
-            Path to the survey data.
+            Path to the YAML configuration file.
 
         Returns
         -------
-        pandas.DataFrame
-            Survey data as pandas DataFrame.
-
+        dict
+            Configuration settings as dict.
         """
 
         self._log.info("Reading configuration from: %s", config_path)
@@ -50,8 +73,24 @@ class ConfigReader:
         self._log.info("Finished reading configuration.")
         return config
 
-    def _check_key(self, config, key, not_found):
-        """Checks presence of a key in the configuration."""
+    def _check_key(self, section, key, not_found):
+        """
+        Checks presence of a key in a section of the configuration.
+
+        Parameters
+        ----------
+        section : dict
+            A section of the configuration.
+        key : str
+            Key to search the section for.
+        not_found : str
+            Action to perform when the key is not found.
+
+        Returns
+        -------
+        bool
+            True if the key exists, False otherwise.
+        """
 
         valid = "error", "warn", "silent"
         if not_found not in valid:
@@ -60,7 +99,7 @@ class ConfigReader:
                 (not_found, "', '".join(valid))
             )
 
-        if key not in config:
+        if key not in section:
             if not_found == "error":
                 msg = f"Cannot find key '{key}' in configuration."
                 self._log.error(msg)
